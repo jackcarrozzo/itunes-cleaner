@@ -1,0 +1,12 @@
+itunes-cleaner
+==============
+
+Basically my iTunes DB is a mess and has a bunch of songs (177 to be exact)
+in duplicate. Fixing it manually is really a hassle.
+
+Status: shows you what tunes appear to be duplicates
+
+Next: be smarter about finding dupes
+
+After that: be able to fix the issues interactively and sanely
+
