@@ -1,11 +1,11 @@
 #!/usr/bin/python
 
-# a work in progress.
+# a work in progress... very.
 
 import sys
 import re
 
-debug=True
+debug=False
 filename='/Users/jackc/Music/iTunes/iTunes Music Library.xml'
 
 try:
@@ -104,14 +104,22 @@ for line in fp.readlines(): #TODO: check if this is iterable or nabs full list
     if k is not None:
       thistrack[k]=v
      
-print "Cool, found %d tracks, of which %d are flagged." % (len(tracks_by_id),len(flagged))
+print "Cool, found %d tracks, of which %d are flagged as dupe." % (len(tracks_by_id),len(flagged))
 
+fcount=1
 for tid in flagged:
-  print "---------"
+  print "--- Dupe %d: %d tracks." % (fcount,len(tags_to_id[tracks_by_id[tid]['tagstr']]))
+  fcount+=1
 
   c=1
   for fid in tags_to_id[tracks_by_id[tid]['tagstr']]:
-    print "%d:\t[%d]\t%s - %s - %s\n\t%s" % (c,fid,tracks_by_id[fid]['Artist'],tracks_by_id[fid]['Album'],
-      tracks_by_id[fid]['Name'],tracks_by_id[tid]['Location'])
+    displocation=tracks_by_id[fid]['Location'].replace('%20',' ')
+    m=re.search('file://localhost/Users/[a-zA-Z0-9]+/Music/iTunes/iTunes Media/Music/(.+)$',
+      displocation) 
+    if m is not None:
+      displocation=m.group(1)    
+
+    print "[%d]\t%s - %s - %s\n\t%s" % (fid,tracks_by_id[fid]['Artist'],tracks_by_id[fid]['Album'],
+      tracks_by_id[fid]['Name'],displocation)
     c+=1
  
