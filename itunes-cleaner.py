@@ -4,12 +4,13 @@
 
 import sys
 import re
+import os
 
 debug=False
-filename='/Users/jackc/Music/iTunes/iTunes Music Library.xml'
+dbfile=os.path.join(os.path.expanduser('~'),'Music/iTunes/iTunes Music Library.xml')
 
 try:
-  fp=open(filename,'r')
+  fp=open(dbfile,'r')
 except Exception, e:
   print "Unable to open library db: %s" % e
   sys.exit(1)
@@ -48,6 +49,7 @@ flagged = set()
 # - 2_IN_TRACKS
 # - 3_TRACK_DEETS
 
+print "Parsing your DB..."
 state='0_OPEN'
 for line in fp.readlines(): #TODO: check if this is iterable or nabs full list
   if '0_OPEN'==state: # looking for first <dict>
